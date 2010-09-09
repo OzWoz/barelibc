@@ -17,9 +17,5 @@ clean: $(DIRLIST:%=%_clean)
 
 $(DIRLIST:%=%_clean):
 	make -C $(subst _clean,,$@) clean
-
-.PHONY: store
-store: clean
-	tar czf store/barelibc_`date +%F_%H-%M`.tar.gz --exclude=store --exclude=cchartab ../barelibc 
 	
 ###

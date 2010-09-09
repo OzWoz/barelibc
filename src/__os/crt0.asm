@@ -6,10 +6,6 @@
 
 NORMAL_EXIT_CODE equ 123456 ;same as in stdlib.h
 
-;!!!FROM THIS LINE ----- should be deleted when we get normal stack
-STACK_SIZE_IN_PAGES equ 1
-;!!!UNTIL THIS LINE ----- should be deleted when we get normal stack
-
 MEM_PAGE_SIZE equ 0x200000 ; same as in syscalls/memory.asm (baremetal src)
 
 extern main
@@ -22,27 +18,6 @@ global __exit_buf
 ;this is the main entry point
 __start:
 	push rbx
-
-;!!!FROM THIS LINE ----- should be deleted when we get normal stack
-	mov rcx, STACK_SIZE_IN_PAGES
-	call b_mem_allocate
-	test rcx, rcx
-	jnz stack_alloc_ok
-	mov rax, 0x8000000000000001
-	int3
-stack_alloc_ok:
-	mov rsi, rax
-	mov rbx, rsp ;save original rsp
-
-	lea rsp, [rax-8]
-	mov rax, MEM_PAGE_SIZE
-	mul rcx
-	add rsp, rax ;set rsp to rax+rcx*MEM_PAGE_SIZE-8
-
-	push rbx ;save original rsp
-	push rsi ;save new stack's bottom (to free it later)
-	push rcx ;save number of pages
-;!!!UNTIL THIS LINE ----- should be deleted when we get normal stack
 
 	call b_mem_get_free
 	call b_mem_allocate
@@ -100,14 +75,6 @@ end:
 	pop rcx
 	pop rax
 	call b_mem_release
-
-;!!!FROM THIS LINE ----- should be deleted when we get normal stack
-	pop rcx ;number of pages
-	pop rax ;stack's bottom
-	pop rbx
-	mov rsp, rbx ;restore original rsp
-	call b_mem_release
-;!!!UNTIL THIS LINE ----- should be deleted when we get normal stack
 
 	mov rax, rdx
 
