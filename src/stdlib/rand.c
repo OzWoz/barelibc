@@ -11,7 +11,6 @@
 #define m_carry __rand_m_state[N]
 #define m_index __rand_m_state[N+1]
 
-static volatile unsigned __rand_inited = 0;
 static volatile unsigned __rand_m_state[N+2];
 static mutex_t __rand_mutex = 0;
 
@@ -19,7 +18,6 @@ void srand(unsigned seed)
 {
 	unsigned i;
 	mutex_lock(&__rand_mutex);
-	__rand_inited = 1;
 	m_q[0] = seed;
 	for (i = 1; i < N; ++i) {
 		m_q[i] = 1812433253UL * (m_q[i - 1] ^ (m_q[i - 1] >> 30)) + i;
@@ -29,14 +27,12 @@ void srand(unsigned seed)
 	mutex_unlock(&__rand_mutex);
 }
 
-int rand(void)
+unsigned urand(void)
 {
 	unsigned long long temp;
 	unsigned x, ret;
 
 	mutex_lock(&__rand_mutex);
-
-	if (!__rand_inited) srand(1);
 
 	m_index = (m_index + 1) & 4095;
 	temp = (unsigned long long)A * (unsigned long long)m_q[m_index] + (unsigned long long)m_carry;
@@ -53,6 +49,11 @@ int rand(void)
 	mutex_unlock(&__rand_mutex);
 
 	return ret;
+}
+
+int rand(void)
+{
+	return (int)(urand()>>1);
 }
 
 ///

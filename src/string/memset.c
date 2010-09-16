@@ -68,10 +68,10 @@ void *memset(void * restrict dst0, int c0, size_t length)
 
 	if ((c = (unsigned char)c0) != 0) {	/* Fill the word. */
 		c = (c << 8) | c;	/* uint_fast16_t is 16 bits. */
-#if UINT_MAX > 0xffff
+#if UINT_FAST16_MAX > 0xffffU
 		c = (c << 16) | c;	/* uint_fast16_t is 32 bits. */
 #endif
-#if UINT_MAX > 0xffffffff
+#if UINT_FAST16_MAX > 0xffffffffU
 		c = (c << 32) | c;	/* uint_fast16_t is 64 bits. */
 #endif
 	}

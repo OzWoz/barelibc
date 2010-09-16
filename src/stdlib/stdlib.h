@@ -69,11 +69,12 @@ void exit(int ret);
 
 #define RAND_MAX ((1U<<31)-1)
 void srand(unsigned seed);
+unsigned urand(void);
 int rand(void);
 
 void itoa(int n, char *s, int b);
 
-void __init_alloc(char *ptr, size_t size);
+void __init_alloc(volatile void *ptr, size_t size);
 void free(void *ptr);
 void *malloc(size_t size);
 void *realloc(void *ptr, size_t size);

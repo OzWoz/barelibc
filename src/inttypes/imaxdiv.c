@@ -9,3 +9,5 @@ intdiv_t imaxdiv(intmax_t numer, intmax_t denom)
 	ret.rem = numer%denom;
 	return ret;
 }
+
+///

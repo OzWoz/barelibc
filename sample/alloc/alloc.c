@@ -4,8 +4,7 @@
 #include <assert.h>
 
 #define N 1000000
-
-int main(void)
+void test1(void)
 {
 	int i, *v, *w;
 
@@ -29,7 +28,29 @@ int main(void)
 	}
 	free(v);
 	free(w);
+}
 
+
+#define M 1024
+#define T 10000
+#define S 10000
+void test2(void)
+{
+	int i;
+	void *v[M];
+	for (i = 0; i < M; i++) {
+		v[i] = NULL;	
+	}
+	for (i = 0; i < T; i++) {
+		int j = rand()%M;
+		v[j] = realloc(v[j], rand()%S);
+	}
+}
+
+int main(void)
+{
+	test1();
+	test2();
 	puts("all tests ok\n");
 	return 0;
 }

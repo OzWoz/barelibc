@@ -6,7 +6,11 @@
 
 int raise(int sig)
 {
-	printf("Raising signal %d\n", sig);
+	char linestr[20];
+	fputs("Raising signal ", stderr);
+	itoa(sig, linestr, 10);
+	fputs(linestr, stderr);
+	fputs("\n", stderr);
 	exit(EXIT_FAILURE);
 	return 0;
 }
