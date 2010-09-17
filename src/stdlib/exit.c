@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <smp.h>
 
-static volatile __atexit_t *__atexit_first = NULL;
+void *__dso_handle = NULL;
+
+static __atexit_t * volatile __atexit_first = NULL;
 static mutex_t __atexit_mutex = 0;
 
 int atexit(void (*func)(void))
@@ -18,16 +20,22 @@ int atexit(void (*func)(void))
 	return 0;
 }
 
-int atexit_arg(void (*func)(void *))
+int atexit_arg(void (*func)(void *), void *arg)
 {
 	__atexit_t *p = malloc(sizeof(__atexit_t));
 	mutex_lock(&__atexit_mutex);
 	p->next = (__atexit_t *)__atexit_first;
 	p->type = __ATEXIT_TYPE_ARG;
 	p->fnc.arg = func;
+	p->arg = arg;
 	__atexit_first = p;
 	mutex_unlock(&__atexit_mutex);
 	return 0;
+}
+
+int __cxa_atexit(void (*func)(void *), void *arg, void *dso_handle)
+{
+	return atexit_arg(func, arg);
 }
 
 void exit(int ret)

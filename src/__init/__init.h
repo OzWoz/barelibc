@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-void __init(volatile void *heap_ptr, size_t heap_size);
+long long __init(int argc, char *argv[], char *envp[], volatile void *heap_ptr, size_t heap_size);
 int main(int argc, char *argv[], char *envp[]);
 
 #ifdef __cplusplus

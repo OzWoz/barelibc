@@ -5,7 +5,12 @@
 
 typedef long long ptrdiff_t;
 typedef unsigned long long size_t;
-typedef char wchar_t;
+
+#ifdef __cplusplus
+	#define restrict __restrict
+#else
+	typedef char wchar_t;
+#endif
 
 #define NULL ((void *)0)
 

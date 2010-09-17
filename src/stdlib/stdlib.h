@@ -58,10 +58,12 @@ extern "C" {
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
 #define NORMAL_EXIT_CODE 123456
-extern jmp_buf __exit_buf;
+
+extern void *__dso_handle;
 
 int atexit(void (*func)(void));
-int atexit_arg(void (*func)(void *));
+int atexit_arg(void (*func)(void *), void *arg);
+int __cxa_atexit(void (*func)(void *), void *arg, void *dso_handle);
 
 void _Exit(int ret);
 void exit(int ret);

@@ -1,13 +1,9 @@
 #include <__init.h>
 #include <__os.h>
-#include <setjmp.h>
-#include <stdlib.h>
-
-jmp_buf __exit_buf;
 
 long long __start(void)
 {
-	unsigned num, ret, argc, i;
+	unsigned num, argc, ret, i;
 	volatile void *mem;
 	char *env = NULL;
 	char *argv[256];
@@ -15,16 +11,12 @@ long long __start(void)
 	__os_mem_get_free(&num);
 	__os_mem_allocate(num, &mem);
 
-	__init(mem, num*__OS_MEM_PAGE_SIZE);
-
 	__os_get_argc(&argc);
 	for (i = 0; i < argc; i++) {
 		__os_get_argv(i, argv+i);
 	}
 
-	ret = setjmp(__exit_buf);
-	if (ret == 0) ret = main(argc, argv, &env);
-	if (ret == NORMAL_EXIT_CODE) ret = 0;
+	ret = __init(argc, argv, &env, mem, num*__OS_MEM_PAGE_SIZE);
 
 	__os_mem_release(mem, num);
 
