@@ -25,7 +25,7 @@
 #define __os_smp_enqueue(proc, param, ret) intel_asm(__b_smp_enqueue "call b_smp_enqueue; setc %b0; movzx %0, %b0", :"=r"(*(ret)) :"a"(proc), "S"(param) :"cc")
 #define __os_smp_dequeue(proc, param) intel_asm(__b_smp_dequeue "call b_smp_dequeue", :"=a"(*(proc)), "=D"(*(param)) ::"cc")
 #define __os_smp_wait() intel_asm(__b_smp_wait "call b_smp_wait", :::"cc")
-#define __os_smp_run(proc, param) intel_asm(__b_smp_run "call b_smp_run", ::"a"(proc), "D"(param) :"cc", "rcx", "rdx", "rsi", "r8", "r9", "r10", "r11")
+#define __os_smp_run(proc, param) intel_asm(__b_smp_run "call b_smp_run", ::"a"(proc), "D"(param) :"cc", "memory", "rcx", "rdx", "rsi", "r8", "r9", "r10", "r11")
 
 #define __OS_MEM_PAGE_SIZE 0x200000
 #define __os_mem_get_free(ret) intel_asm(__b_mem_get_free "call b_mem_get_free", :"=c"(*(ret)) ::"cc")
