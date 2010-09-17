@@ -3,6 +3,10 @@
 #ifndef __STDARG_H
 #define __STDARG_H
 
+#ifdef __CLANG__
+typedef char *__builtin_va_list;
+#endif
+
 typedef __builtin_va_list va_list;
 #define va_start(v,l) __builtin_va_start(v,l)
 #define va_arg(v,l) __builtin_va_arg(v,l)

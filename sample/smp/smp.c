@@ -11,9 +11,9 @@ static time_t mainstart;
 void func(void *param)
 {
 	time_t start = time(NULL);
-	printf("starting thread %d at time %d\n", thread_current_id(), TIME_NOW);
+	printf("starting thread %d at time %d (param: %d)\n", thread_current_id(), TIME_NOW, (int)(size_t)param);
 	while (difftime(time(NULL), start) < 4);
-	printf("ending thread %d at time %d\n", thread_current_id(), TIME_NOW);
+	printf("ending thread %d at time %d (param: %d)\n", thread_current_id(), TIME_NOW, (int)(size_t)param);
 }
 
 int main(void)
@@ -22,7 +22,7 @@ int main(void)
 	mainstart = time(NULL);
 	printf("starting main thread %d at time %d\n", thread_current_id(), TIME_NOW);
 	for (i = 0; i < 10; i++) {
-		thread_create(func, NULL);
+		thread_create(func, (void *)(size_t)i);
 	}
 	printf("starting to wait at time %d\n", TIME_NOW);
 	thread_wait();

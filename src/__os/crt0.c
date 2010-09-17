@@ -17,13 +17,13 @@ long long __start(void)
 
 	__init(mem, num*__OS_MEM_PAGE_SIZE);
 
-	if ((ret = setjmp(__exit_buf)) == 0) {
-		__os_get_argc(&argc);
-		for (i = 0; i < argc; i++) {
-			__os_get_argv(i, argv+i);
-		}
-		ret = main(argc, argv, &env);
+	__os_get_argc(&argc);
+	for (i = 0; i < argc; i++) {
+		__os_get_argv(i, argv+i);
 	}
+
+	ret = setjmp(__exit_buf);
+	if (ret == 0) ret = main(argc, argv, &env);
 	if (ret == NORMAL_EXIT_CODE) ret = 0;
 
 	__os_mem_release(mem, num);

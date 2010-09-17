@@ -14,15 +14,16 @@ void thread_create(thread_fnc func, void *param)
 {
 	unsigned bad;
 	unsigned long long proc;
+	void *procparam;
 	for (;;) {
-		__os_smp_enqueue(func, &bad);
+		__os_smp_enqueue(func, param, &bad);
 		if (!bad) break;
-		__os_smp_dequeue(&proc);
+		__os_smp_dequeue(&proc, &procparam);
 		if (proc != 0) {
 			do {
-				__os_smp_enqueue(func, &bad);
+				__os_smp_enqueue(func, param, &bad);
 			} while (bad);
-			__os_smp_run(proc);
+			__os_smp_run(proc, procparam);
 		}
 	}
 }
@@ -30,10 +31,11 @@ void thread_create(thread_fnc func, void *param)
 void thread_wait(void)
 {
 	unsigned long long proc;
+	void *procparam;
 	for (;;) {
-		__os_smp_dequeue(&proc);
+		__os_smp_dequeue(&proc, &procparam);
 		if (proc == 0) break;
-        __os_smp_run(proc);
+        __os_smp_run(proc, procparam);
 	}
 	__os_smp_wait();
 }
