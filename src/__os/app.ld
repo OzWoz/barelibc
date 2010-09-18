@@ -5,19 +5,19 @@ SECTIONS
 {
 	. = 0x200000;
 
-	.text ALIGN(4096) :
+	.text /* ALIGN(0x1000) */ :
 	{
 		*(.text*)
 		*(.gnu.linkonce.t*)
 	}
 
-	.rodata ALIGN(4096) :
+	.rodata /* ALIGN(0x1000) */ :
 	{
 		*(.rodata*)
 		*(.gnu.linkonce.r*)
 	}
 
-	.data ALIGN(4096) :
+	.data /* ALIGN(0x1000) */ :
 	{
 		__start_ctors = .;
         *(.ctor*)
@@ -33,7 +33,7 @@ SECTIONS
 		QUAD(ADDR(.bss)+SIZEOF(.bss))
 	}
 
-	.bss ALIGN(4096) :
+	.bss /* ALIGN(0x1000) */ :
 	{
 		*(.COMMON*)
 		*(.bss*)
