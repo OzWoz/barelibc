@@ -31,7 +31,7 @@
 
 #include <string.h>
 
-char *strrchr(const char * restrict p, int ch)
+char *BLC_PREFIX(strrchr)(const char * restrict p, int ch)
 {
 	char *save;
 	char c;

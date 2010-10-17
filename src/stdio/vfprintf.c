@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "__stdio_inner.h"
 
-int vfprintf(FILE *f, const char *format, va_list args)
+int BLC_PREFIX(vfprintf)(FILE *f, const char *format, va_list args)
 {
 	int ret;
 	mutex_lock(&f->mutex);

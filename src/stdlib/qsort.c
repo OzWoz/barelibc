@@ -84,10 +84,10 @@ static inline char *med3(char *a, char *b, char *c, cmp_t cmp, void *arg)
 }
 
 #ifdef I_AM_QSORT_ARG
-void qsort_arg(void *a, size_t n, size_t es, cmp_t cmp, void *arg)
+void BLC_PREFIX(qsort_arg)(void *a, size_t n, size_t es, cmp_t cmp, void *arg)
 #else
 #define arg NULL
-void qsort(void *a, size_t n, size_t es, cmp_t cmp)
+void BLC_PREFIX(qsort)(void *a, size_t n, size_t es, cmp_t cmp)
 #endif
 {
 	char *pa, *pb, *pc, *pd, *pl, *pm, *pn;

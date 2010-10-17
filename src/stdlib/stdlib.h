@@ -55,15 +55,51 @@ struct __atexit_s {
 extern "C" {
 #endif
 
+#define atexit BLC_PREFIX(atexit)
+#define atexit_arg BLC_PREFIX(atexit_arg)
+#define _Exit BLC_PREFIX(_Exit)
+#define exit BLC_PREFIX(exit)
+#define srand BLC_PREFIX(srand)
+#define urand BLC_PREFIX(urand)
+#define rand BLC_PREFIX(rand)
+#define itoa BLC_PREFIX(itoa)
+#define free BLC_PREFIX(free)
+#define malloc BLC_PREFIX(malloc)
+#define realloc BLC_PREFIX(realloc)
+#define calloc BLC_PREFIX(calloc)
+#define mktowc BLC_PREFIX(mktowc)
+#define wctomb BLC_PREFIX(wctomb)
+#define mbstowcs BLC_PREFIX(mbstowcs)
+#define strtol BLC_PREFIX(strtol)
+#define strtoll BLC_PREFIX(strtoll)
+#define strtoul BLC_PREFIX(strtoul)
+#define strtoull BLC_PREFIX(strtoull)
+#define atoi BLC_PREFIX(atoi)
+#define atol BLC_PREFIX(atol)
+#define atoll BLC_PREFIX(atoll)
+#define getenv BLC_PREFIX(getenv)
+#define system BLC_PREFIX(system)
+#define abs BLC_PREFIX(abs)
+#define labs BLC_PREFIX(labs)
+#define llabs BLC_PREFIX(llabs)
+#define div BLC_PREFIX(div)
+#define ldiv BLC_PREFIX(ldiv)
+#define lldiv BLC_PREFIX(lldiv)
+#define qsort BLC_PREFIX(qsort)
+#define qsort_arg BLC_PREFIX(qsort_arg)
+#define bsearch BLC_PREFIX(bsearch)
+#define bsearch_arg BLC_PREFIX(bsearch_arg)
+
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
 #define NORMAL_EXIT_CODE 123456
-
-extern void *__dso_handle;
-
 int atexit(void (*func)(void));
 int atexit_arg(void (*func)(void *), void *arg);
+
+#ifdef __os_baremetal
+extern void *__dso_handle;
 int __cxa_atexit(void (*func)(void *), void *arg, void *dso_handle);
+#endif
 
 void _Exit(int ret);
 void exit(int ret);

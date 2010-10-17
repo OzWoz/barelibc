@@ -61,7 +61,12 @@ static sl_t __sl;
 
 void __init_alloc(volatile void *ptr, size_t size)
 {
-	unsigned sls = (sl_size(SL_MAX)+3)&~3;
+	unsigned sls;
+
+	assert(ptr != NULL);
+	assert(size >= 1024);
+
+	sls = (sl_size(SL_MAX)+3)&~3;
 	__first = (header_t *)((volatile unsigned *)ptr+sls);
 	__first->marker = _MARK_;
 	__first->size = size - sls*sizeof(unsigned) - sizeof(header_t);
@@ -124,7 +129,7 @@ static void __free_nolock(void *ptr)
 	}
 }
 
-void free(void *ptr)
+void BLC_PREFIX(free)(void *ptr)
 {
 	mutex_lock(&__mem_mutex);
 	__free_nolock(ptr);
@@ -166,7 +171,7 @@ static void *__malloc_nolock(size_t size)
 	return (void *)(gap+1);
 }
 
-void *malloc(size_t size)
+void *BLC_PREFIX(malloc)(size_t size)
 {
 	void *ret;
 	mutex_lock(&__mem_mutex);
@@ -224,7 +229,7 @@ static void *__realloc_nolock(void *ptr, size_t size)
 	return newptr;
 }
 
-void *realloc(void *ptr, size_t size)
+void *BLC_PREFIX(realloc)(void *ptr, size_t size)
 {
 	void *ret;
 	mutex_lock(&__mem_mutex);
@@ -233,7 +238,7 @@ void *realloc(void *ptr, size_t size)
 	return ret;
 }
 
-void *calloc(size_t nmemb, size_t size)
+void *BLC_PREFIX(calloc)(size_t nmemb, size_t size)
 {
 	size_t s = nmemb*size;
 	void *ptr = malloc(s);

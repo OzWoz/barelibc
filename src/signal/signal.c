@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int raise(int sig)
+int BLC_PREFIX(raise)(int sig)
 {
 	char linestr[20];
 	fputs("Raising signal ", stderr);

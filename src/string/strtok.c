@@ -82,7 +82,7 @@ cont:
 
 static char *last[MAX_THREAD_NUM];
 
-char *strtok(char *s, const char *delim)
+char *BLC_PREFIX(strtok)(char *s, const char *delim)
 {
 	return (__strtok_r(s, delim, last+thread_current_id()));
 }

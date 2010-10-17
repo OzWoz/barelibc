@@ -47,6 +47,9 @@ struct lconv {
 extern "C" {
 #endif
 
+#define setlocale BLC_PREFIX(setlocale)
+#define localeconv BLC_PREFIX(localeconv)
+
 char *setlocale(int category, const char *locale);
 struct lconv *localeconv(void);
 

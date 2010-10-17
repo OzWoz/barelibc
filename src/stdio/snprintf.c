@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "__stdio_inner.h"
 
-int snprintf(char *buf, int maxlen, const char *format, ...)
+int BLC_PREFIX(snprintf)(char *buf, int maxlen, const char *format, ...)
 {
 	int ret;
 	va_list args;

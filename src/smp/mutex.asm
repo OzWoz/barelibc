@@ -10,19 +10,17 @@ global mutex_unlock
 ;mutex_t must be 64 bit wide and volatile
 
 ;void mutex_lock(mutex_t *m);
-;m: rdi
 mutex_lock:
-	bt qword [rdi], 0
+	bt qword [PARAM1], 0
 	jc mutex_lock
-	lock bts qword [rdi], 0
+	lock bts qword [PARAM1], 0
 	jc mutex_lock
 	ret
 
 ;unsigned mutex_trylock(mutex_t *m);
-;m: rdi
 ;returns 1 if successful, 0 if failed
 mutex_trylock:
-	lock bts qword [rdi], 0
+	lock bts qword [PARAM1], 0
 	jc fail
 	mov rax, 1
 	ret
@@ -31,9 +29,8 @@ fail:
 	ret
 
 ;void mutex_unlock(mutex_t *m);
-;m: rdi
 mutex_unlock:
-	btr qword [rdi], 0
+	btr qword [PARAM1], 0
 	ret
 
 ;;;

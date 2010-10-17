@@ -50,7 +50,7 @@ typedef	int word;		/* "word" used for optimal copy speed */
 #include <string.h>
 #include <stdint.h>
 
-void *memmove(void *dst0, const void *src0, size_t length)
+void *BLC_PREFIX(memmove)(void *dst0, const void *src0, size_t length)
 {
 	char *dst = dst0;
 	const char *src = src0;

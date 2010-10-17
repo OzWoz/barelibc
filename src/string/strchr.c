@@ -32,7 +32,7 @@
 #include <stddef.h>
 #include <string.h>
 
-char *strchr(const char *p, int ch)
+char *BLC_PREFIX(strchr)(const char *p, int ch)
 {
 	char c;
 

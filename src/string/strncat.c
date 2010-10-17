@@ -38,7 +38,7 @@
  * Concatenate src on the end of dst.  At most strlen(dst)+n+1 bytes
  * are written at dst (at most n+1 bytes being appended).  Return dst.
  */
-char *strncat(char * restrict dst, const char * restrict src, size_t n)
+char *BLC_PREFIX(strncat)(char * restrict dst, const char * restrict src, size_t n)
 {
 	if (n != 0) {
 		char *d = dst;

@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-int atoi(char * restrict s)
+int BLC_PREFIX(atoi)(char * restrict s)
 {
 	return (int)strtol(s, NULL, 10);
 }

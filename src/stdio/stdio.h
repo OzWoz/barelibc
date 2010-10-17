@@ -34,6 +34,15 @@ extern FILE __stderr;
 extern "C" {
 #endif
 
+#define fputc BLC_PREFIX(fputc)
+#define fputs BLC_PREFIX(fputs)
+#define fprintf BLC_PREFIX(fprintf)
+#define snprintf BLC_PREFIX(snprintf)
+#define sprintf BLC_PREFIX(sprintf)
+#define vfprintf BLC_PREFIX(vfprintf)
+#define vsnprintf BLC_PREFIX(vsnprintf)
+#define vsprintf BLC_PREFIX(vsprintf)
+
 int fputc(int c, FILE *f);
 #define putc fputc
 #define putchar(c) fputc((c), stdout)

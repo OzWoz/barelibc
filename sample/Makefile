@@ -1,10 +1,9 @@
 #BareLibC -- Copyright (C) 2010 Gergely Gabor Nagy (ngg@ngg.hu) -- see attached LICENSE file
 
-DIRLIST = hellostd string assert alloc sleep stdarg smp pf int3 atomic cpp $(wildcard cchartab)
-
-###################################
-
 include ../Makefile.config
+
+DIRLIST = hellostd string assert alloc sleep stdarg smp pf int3 atomic $(wildcard cchartab)
+
 
 .PHONY: all $(DIRLIST)
 all: $(DIRLIST)

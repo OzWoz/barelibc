@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-int abs(int num)
+int BLC_PREFIX(abs)(int num)
 {
 	return num < 0 ? -num : num;
 }

@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include <smp.h>
 
+#ifdef __os_baremetal
 void *__dso_handle = NULL;
+#endif
 
 static __atexit_t * volatile __atexit_first = NULL;
 static mutex_t __atexit_mutex = 0;
 
-int atexit(void (*func)(void))
+int BLC_PREFIX(atexit)(void (*func)(void))
 {
 	__atexit_t *p = malloc(sizeof(__atexit_t));
 	mutex_lock(&__atexit_mutex);
@@ -20,7 +22,7 @@ int atexit(void (*func)(void))
 	return 0;
 }
 
-int atexit_arg(void (*func)(void *), void *arg)
+int BLC_PREFIX(atexit_arg)(void (*func)(void *), void *arg)
 {
 	__atexit_t *p = malloc(sizeof(__atexit_t));
 	mutex_lock(&__atexit_mutex);
@@ -33,12 +35,14 @@ int atexit_arg(void (*func)(void *), void *arg)
 	return 0;
 }
 
+#ifdef __os_baremetal
 int __cxa_atexit(void (*func)(void *), void *arg, void *dso_handle)
 {
 	return atexit_arg(func, arg);
 }
+#endif
 
-void exit(int ret)
+void BLC_PREFIX(exit)(int ret)
 {
 	__atexit_t *p;
 	for (;;) {

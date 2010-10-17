@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "__stdio_inner.h"
 
-int fputs(const char *s, FILE *f)
+int BLC_PREFIX(fputs)(const char *s, FILE *f)
 {
 	int i;
 	mutex_lock(&f->mutex);

@@ -23,7 +23,7 @@ int __fputc_nolock(int c, FILE *f)
 	}
 }
 
-int fputc(int c, FILE *f)
+int BLC_PREFIX(fputc)(int c, FILE *f)
 {
 	int ret;
 	mutex_lock(&f->mutex);

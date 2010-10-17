@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-long atol(char * restrict s)
+long BLC_PREFIX(atol)(char * restrict s)
 {
 	return strtol(s, NULL, 10);
 }

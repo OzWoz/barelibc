@@ -4,6 +4,7 @@
 
 int main(void)
 {
+	intel_asm("mov rax, cr0",);
 	break_point();
   	return 0;
 }

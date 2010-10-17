@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-size_t mbstowcs(wchar_t * restrict pwcs, const char * restrict s, size_t n)
+size_t BLC_PREFIX(mbstowcs)(wchar_t * restrict pwcs, const char * restrict s, size_t n)
 {
 	int ret;
 	for (ret = 0; n; ret++, n--) {

@@ -34,7 +34,7 @@
 
 #include <string.h>
 
-void *memchr(const void * restrict s, int c, size_t n)
+void *BLC_PREFIX(memchr)(const void * restrict s, int c, size_t n)
 {
 	if (n != 0) {
 		const unsigned char *p = s;

@@ -17,12 +17,12 @@ void __init_alloc(volatile void *ptr, size_t size)
 	__mem_mutex = 0;
 }
 
-void free(void *ptr)
+void BLC_PREFIX(free)(void *ptr)
 {
 
 }
 
-void *malloc(size_t size)
+void *BLC_PREFIX(malloc)(size_t size)
 {
 	void *ptr;
 	mutex_lock(&__mem_mutex);
@@ -36,7 +36,7 @@ void *malloc(size_t size)
 	return ptr;
 }
 
-void *realloc(void *ptr, size_t size)
+void *BLC_PREFIX(realloc)(void *ptr, size_t size)
 {
 	void *newptr;
 	if (size == 0) {
@@ -48,7 +48,7 @@ void *realloc(void *ptr, size_t size)
 	return newptr;
 }
 
-void *calloc(size_t nmemb, size_t size)
+void *BLC_PREFIX(calloc)(size_t nmemb, size_t size)
 {
 	size_t s = nmemb*size;
 	void *ptr = malloc(s);

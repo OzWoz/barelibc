@@ -11,6 +11,25 @@
 extern "C" {
 #endif
 
+#define memcmp BLC_PREFIX(memcmp)
+#define memmove BLC_PREFIX(memmove)
+#define memset BLC_PREFIX(memset)
+#define memchr BLC_PREFIX(memchr)
+#define strerror BLC_PREFIX(strerror)
+#define strcmp BLC_PREFIX(strcmp)
+#define strncmp BLC_PREFIX(strncmp)
+#define strcpy BLC_PREFIX(strcpy)
+#define strlen BLC_PREFIX(strlen)
+#define strcat BLC_PREFIX(strcat)
+#define strncat BLC_PREFIX(strncat)
+#define strchr BLC_PREFIX(strchr)
+#define strstr BLC_PREFIX(strstr)
+#define strcspn BLC_PREFIX(strcspn)
+#define strpbrk BLC_PREFIX(strpbrk)
+#define strrchr BLC_PREFIX(strrchr)
+#define strspn BLC_PREFIX(strspn)
+#define strtok BLC_PREFIX(strtok)
+
 int memcmp(const void *s1, const void *s2, size_t n);
 void *memmove(void *s1, const void *s2, size_t n);
 #define memcpy memmove

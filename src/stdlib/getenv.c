@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-char *getenv(const char *name)
+char *BLC_PREFIX(getenv)(const char *name)
 {
 	return NULL;
 }

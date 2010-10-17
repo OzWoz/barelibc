@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-lldiv_t lldiv(long long numer, long long denom)
+lldiv_t BLC_PREFIX(lldiv)(long long numer, long long denom)
 {
 	lldiv_t ret;
 	ret.quot = numer/denom;

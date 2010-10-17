@@ -32,7 +32,7 @@
 #define	IDX(c)	((unsigned char)(c) / LLONG_BIT)
 #define	BIT(c)	((unsigned long long)1 << ((unsigned char)(c) % LLONG_BIT))
 
-size_t strspn(const char *s, const char *charset)
+size_t BLC_PREFIX(strspn)(const char *s, const char *charset)
 {
 	/*
 	 * NB: idx and bit are temporaries whose use causes gcc 3.4.2 to

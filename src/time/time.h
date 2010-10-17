@@ -13,10 +13,6 @@
 
 //CLOCKS_PER_SEC comes from __os.h
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef unsigned long long time_t;
 typedef unsigned long long clock_t;
 
@@ -31,6 +27,13 @@ struct tm {
 	int tm_yday; // days since January 1 — [0, 365]
 	int tm_isdst; // Daylight Saving Time flag
 };
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define clock BLC_PREFIX(clock)
+#define time BLC_PREFIX(time)
 
 clock_t clock(void);
 time_t time(time_t *ptr);

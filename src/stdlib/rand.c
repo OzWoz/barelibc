@@ -14,7 +14,7 @@
 static volatile unsigned __rand_m_state[N+2];
 static mutex_t __rand_mutex = 0;
 
-void srand(unsigned seed)
+void BLC_PREFIX(srand)(unsigned seed)
 {
 	unsigned i;
 	mutex_lock(&__rand_mutex);
@@ -27,7 +27,7 @@ void srand(unsigned seed)
 	mutex_unlock(&__rand_mutex);
 }
 
-unsigned urand(void)
+unsigned BLC_PREFIX(urand)(void)
 {
 	unsigned long long temp;
 	unsigned x, ret;
@@ -51,7 +51,7 @@ unsigned urand(void)
 	return ret;
 }
 
-int rand(void)
+int BLC_PREFIX(rand)(void)
 {
 	return (int)(urand()>>1);
 }

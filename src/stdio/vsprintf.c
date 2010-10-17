@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "__stdio_inner.h"
 
-int vsprintf(char *buf, const char *format, va_list args)
+int BLC_PREFIX(vsprintf)(char *buf, const char *format, va_list args)
 {
 	return __pformat(PFORMAT_NOLIMIT, buf, 0, format, args);
 }

@@ -3,7 +3,7 @@
 #include <wctype.h>
 #include <string.h>
 
-wctype_t wctype(const char *prop)
+wctype_t BLC_PREFIX(wctype)(const char *prop)
 {
 	if (!strcmp(prop, "alnum")) return wctype_alnum;
 	if (!strcmp(prop, "alpha")) return wctype_alpha;

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "__stdio_inner.h"
 
-int fprintf(FILE *f, const char *format, ...)
+int BLC_PREFIX(fprintf)(FILE *f, const char *format, ...)
 {
 	int ret;
 	va_list args;

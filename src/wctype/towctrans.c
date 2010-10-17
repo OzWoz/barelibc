@@ -3,7 +3,7 @@
 #include <wctype.h>
 #include <string.h>
 
-wint_t towctrans(wint_t wc, wctrans_t desc)
+wint_t BLC_PREFIX(towctrans)(wint_t wc, wctrans_t desc)
 {
 	switch (desc) {
 	case wctrans_tolower:

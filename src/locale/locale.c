@@ -11,7 +11,8 @@ CHAR_MAX, CHAR_MAX, CHAR_MAX, CHAR_MAX, CHAR_MAX, CHAR_MAX, CHAR_MAX};
 static char *__locale_name_ = "";
 static char *__locale_name_C = "C";
 
-char *setlocale(int category, const char *locale)
+
+char *BLC_PREFIX(setlocale)(int category, const char *locale)
 {
 	if (locale) {
 		if (locale[0] == 0) {
@@ -28,7 +29,7 @@ char *setlocale(int category, const char *locale)
 	return __locale_name_C;
 }
 
-struct lconv *localeconv(void)
+struct lconv *BLC_PREFIX(localeconv)(void)
 {
 	__locale.decimal_point[0] = '.';
 	__locale.decimal_point[1] = 0;

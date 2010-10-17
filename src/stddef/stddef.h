@@ -23,6 +23,10 @@ typedef unsigned long long size_t;
 
 #define break_point(...) intel_asm("int3", __VA_ARGS__ );
 
+#define BLC_PREFIX(x) __blc_ ## x
+
+#define main BLC_PREFIX(main)
+
 #endif //__STDDEF_H
 
 ///

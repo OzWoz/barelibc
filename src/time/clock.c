@@ -3,9 +3,9 @@
 #include <time.h>
 #include <__os.h>
 
-clock_t clock(void)
+clock_t BLC_PREFIX(clock)(void)
 {
-	int c;
+	unsigned long long c;
 	__os_get_timecounter(&c);
 	return (clock_t)c;
 }

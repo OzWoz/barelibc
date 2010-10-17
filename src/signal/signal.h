@@ -28,6 +28,8 @@ typedef volatile char sig_atomic_t;
 extern "C" {
 #endif
 
+#define raise BLC_PREFIX(raise)
+
 int raise(int sig);
 
 #ifdef __cplusplus

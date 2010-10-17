@@ -2,7 +2,7 @@
 
 #include <time.h>
 
-time_t time(time_t *ptr)
+time_t BLC_PREFIX(time)(time_t *ptr)
 {
 	time_t t = (time_t)(clock()/CLOCKS_PER_SEC);
 	if (ptr) *ptr = t;

@@ -2,7 +2,7 @@
 
 #include <inttypes.h>
 
-intdiv_t imaxdiv(intmax_t numer, intmax_t denom)
+intdiv_t BLC_PREFIX(imaxdiv)(intmax_t numer, intmax_t denom)
 {
 	intdiv_t ret;
 	ret.quot = numer/denom;

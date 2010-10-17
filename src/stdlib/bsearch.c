@@ -49,11 +49,11 @@
  */
 #ifdef I_AM_BSEARCH_ARG
 #define CMP(t, x, y) compar((t), (x), (y))
-void *bsearch_arg(const void *key, const void *base0, size_t nmemb, size_t size, int (*compar)(void *, const void *, const void *), void *arg)
+void *BLC_PREFIX(bsearch_arg)(const void *key, const void *base0, size_t nmemb, size_t size, int (*compar)(void *, const void *, const void *), void *arg)
 #else
 #define CMP(t, x, y) compar((x), (y))
 #define arg NULL
-void *bsearch(const void *key, const void *base0, size_t nmemb, size_t size, int (*compar)(const void *, const void *))
+void *BLC_PREFIX(bsearch)(const void *key, const void *base0, size_t nmemb, size_t size, int (*compar)(const void *, const void *))
 #endif
 {
 	const char *base = base0;

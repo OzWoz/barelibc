@@ -14,7 +14,7 @@ static inline void reverse(char *s)
 	}
 }
 
-void itoa(int n, char *s, int b)
+void BLC_PREFIX(itoa)(int n, char *s, int b)
 {
 	int i = 0;
 

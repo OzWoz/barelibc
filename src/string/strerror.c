@@ -3,7 +3,7 @@
 #include <string.h>
 #include <errno.h>
 
-char *strerror(int n)
+char *BLC_PREFIX(strerror)(int n)
 {
 	if (n < 0 || n >= EMAXERROR) return NULL;
 	return __errstr[n];

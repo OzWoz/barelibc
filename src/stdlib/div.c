@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-div_t div(int numer, int denom)
+div_t BLC_PREFIX(div)(int numer, int denom)
 {
 	div_t ret;
 	ret.quot = numer/denom;

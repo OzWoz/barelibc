@@ -70,7 +70,7 @@ static const unsigned long long mask80 = 0x8080808080808080;
 		    return (p - str + x);	\
 	} while (0)
 
-size_t strlen(const char * restrict str)
+size_t BLC_PREFIX(strlen)(const char * restrict str)
 {
 	const char *p;
 	const unsigned long long *lp;

@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-int wctomb(char * restrict s, wchar_t wc)
+int BLC_PREFIX(wctomb)(char * restrict s, wchar_t wc)
 {
 	if (s == NULL) return 0;
 	*s = wc;

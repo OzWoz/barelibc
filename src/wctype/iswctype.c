@@ -3,7 +3,7 @@
 #include <wctype.h>
 #include <string.h>
 
-int iswctype(wint_t wc, wctype_t desc)
+int BLC_PREFIX(iswctype)(wint_t wc, wctype_t desc)
 {
 	switch (desc) {
 	case wctype_alnum:

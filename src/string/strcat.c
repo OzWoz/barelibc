@@ -31,7 +31,7 @@
 
 #include <string.h>
 
-char *strcat(char * restrict s, const char * restrict append)
+char *BLC_PREFIX(strcat)(char * restrict s, const char * restrict append)
 {
 	char *save = s;
 

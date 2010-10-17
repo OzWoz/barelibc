@@ -41,7 +41,7 @@
  * Assumes that the upper and lower case
  * alphabets and digits are each contiguous.
  */
-long strtol(const char * restrict nptr, char ** restrict endptr, int base)
+long BLC_PREFIX(strtol)(const char * restrict nptr, char ** restrict endptr, int base)
 {
 	const char *s;
 	unsigned long acc;

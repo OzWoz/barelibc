@@ -5,15 +5,15 @@
 
 unsigned thread_current_id(void)
 {
-	unsigned ret;
+	unsigned long long ret;
 	__os_smp_get_id(&ret);
-	return ret;
+	return (unsigned)ret;
 }
 
 void thread_create(thread_fnc func, void *param)
 {
-	unsigned bad;
-	unsigned long long proc;
+	unsigned long long bad;
+	thread_fnc proc;
 	void *procparam;
 	for (;;) {
 		__os_smp_enqueue(func, param, &bad);
@@ -30,7 +30,7 @@ void thread_create(thread_fnc func, void *param)
 
 void thread_wait(void)
 {
-	unsigned long long proc;
+	thread_fnc proc;
 	void *procparam;
 	for (;;) {
 		__os_smp_dequeue(&proc, &procparam);

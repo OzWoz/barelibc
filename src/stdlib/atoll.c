@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-long long atoll(char * restrict s)
+long long BLC_PREFIX(atoll)(char * restrict s)
 {
 	return strtoll(s, NULL, 10);
 }

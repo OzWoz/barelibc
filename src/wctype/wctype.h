@@ -15,10 +15,6 @@
 #include <ctype.h>
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef enum {
 	wctype_none = 0,
 	wctype_alnum,
@@ -55,6 +51,15 @@ typedef enum {
 #define iswxdigit isxdigit
 #define towlower tolower
 #define towupper toupper
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define wctype BLC_PREFIX(wctype)
+#define iswctype BLC_PREFIX(iswctype)
+#define wctrans BLC_PREFIX(wctrans)
+#define towctrans BLC_PREFIX(towctrans)
 
 wctype_t wctype(const char *prop);
 int iswctype(wint_t wc, wctype_t desc);

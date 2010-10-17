@@ -38,7 +38,7 @@
  * Copy src to dst, truncating or null-padding to always copy n bytes.
  * Return dst.
  */
-char *strncpy(char * restrict dst, const char * restrict src, size_t n)
+char *BLC_PREFIX(strncpy)(char * restrict dst, const char * restrict src, size_t n)
 {
 	if (n != 0) {
 		char *d = dst;

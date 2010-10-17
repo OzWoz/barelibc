@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-long labs(long num)
+long BLC_PREFIX(labs)(long num)
 {
 	return num < 0 ? -num : num;
 }

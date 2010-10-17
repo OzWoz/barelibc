@@ -31,7 +31,7 @@
 
 #include <string.h>
 
-int strncmp(const char *s1, const char *s2, size_t n)
+int BLC_PREFIX(strncmp)(const char *s1, const char *s2, size_t n)
 {
 
 	if (n == 0)

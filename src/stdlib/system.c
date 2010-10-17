@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-int system(const char *str)
+int BLC_PREFIX(system)(const char *str)
 {
 	return 0;
 }

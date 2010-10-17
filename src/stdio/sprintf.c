@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "__stdio_inner.h"
 
-int sprintf(char *buf, const char *format, ...)
+int BLC_PREFIX(sprintf)(char *buf, const char *format, ...)
 {
 	int ret;
 	va_list args;

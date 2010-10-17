@@ -3,9 +3,9 @@
 include ../../Makefile.config
 
 .PHONY: all
-all: $(BINDIR)/$(EXECNAME).app
+all: $(BINDIR)/$(EXECNAME)$(APPEXT)
 
-$(BINDIR)/$(EXECNAME).app: $(BINDIR)/crt0.o $(CFILES:%=%.o) $(CPPFILES:%=%.o) $(LIB)
+$(BINDIR)/$(EXECNAME)$(APPEXT): $(BINDIR)/blc_crt0.o $(CFILES:%=%.o) $(CPPFILES:%=%.o) $(LIB)
 	$(LD) $(LDFLAGS) -o $@ $+
 
 $(CFILES:%=%.o): $$(patsubst %.o,%.c,$$@) $(HFILES:%=%.h)
@@ -16,7 +16,7 @@ $(CPPFILES:%=%.o): $$(patsubst %.o,%.cpp,$$@) $(HFILES:%=%.h)
 
 .PHONY: clean $(CFILES:%=%_clean) $(CPPFILES:%=%_clean)
 clean: $(CFILES:%=%_clean) $(CPPFILES:%=%_clean)
-	rm -f $(BINDIR)/$(EXECNAME).app
+	rm -f $(BINDIR)/$(EXECNAME)$(APPEXT)
 	
 $(CFILES:%=%_clean):
 	rm -f $(subst _clean,.o,$@)

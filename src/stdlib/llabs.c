@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-long long llabs(long long num)
+long long BLC_PREFIX(llabs)(long long num)
 {
 	return num < 0 ? -num : num;
 }

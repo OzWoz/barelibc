@@ -1,13 +1,12 @@
 #BareLibC -- Copyright (C) 2010 Gergely Gabor Nagy (ngg@ngg.hu) -- see attached LICENSE file
 
+include ../Makefile.config
+
 DIRLIST = assert complex ctype errno fenv \
 float __init inttypes iso646 limits locale math \
-__os setjmp signal smp stdarg stdbool stddef \
-stdint stdio stdlib string tgmath time wchar wctype
-
-###########################################
-
-include ../Makefile.config
+setjmp signal smp stdarg stdbool stddef \
+stdint stdio stdlib string tgmath time wchar wctype \
+__os_$(__OS)
 
 .PHONY: all $(DIRLIST) copyinc $(DIRLIST:%=%_copyinc)
 
@@ -23,7 +22,7 @@ $(DIRLIST:%=%_copyinc):
 
 .PHONY: clean $(DIRLIST:%=%_clean)
 clean: $(DIRLIST:%=%_clean)
-	rm -f __os/$(LIB)
+	rm -f __init/$(LIB)
 
 $(DIRLIST:%=%_clean):
 	make -C $(subst _clean,,$@) clean

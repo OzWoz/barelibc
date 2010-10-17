@@ -31,7 +31,7 @@
 
 #include <string.h>
 
-char *strcpy(char * restrict to, const char * restrict from)
+char *BLC_PREFIX(strcpy)(char * restrict to, const char * restrict from)
 {
 	char *save = to;
 

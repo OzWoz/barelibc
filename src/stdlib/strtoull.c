@@ -40,7 +40,7 @@
  * Assumes that the upper and lower case
  * alphabets and digits are each contiguous.
  */
-unsigned long long strtoull(const char * restrict nptr, char ** restrict endptr, int base)
+unsigned long long BLC_PREFIX(strtoull)(const char * restrict nptr, char ** restrict endptr, int base)
 {
 	const char *s;
 	unsigned long long acc;

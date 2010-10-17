@@ -208,6 +208,9 @@ typedef struct {
 extern "C" {
 #endif
 
+#define imaxabs BLC_PREFIX(imaxabs)
+#define imaxdiv BLC_PREFIX(imaxdiv)
+
 intmax_t imaxabs(intmax_t val);
 intdiv_t imaxdiv(intmax_t numer, intmax_t denom);
 
