@@ -13,10 +13,10 @@ typedef volatile struct header_s header_t;
 
 struct header_s {
 	unsigned marker;
+	unsigned type;
 	size_t size;
 	header_t *prev;
 	header_t *next;
-	unsigned type;
 };
 
 static __inline int cmp(const void *dummy, const unsigned *a, const unsigned *b)
@@ -39,7 +39,7 @@ static __inline void *fakerealloc(const void *dummy, const void *ptr, unsigned s
 #define SL_ATTR static __inline
 #define SL_STATICATTR static __inline
 #define SL_HASBLINK 0
-#define SL_KEYSIZE 2
+#define SL_KEYSIZE (sizeof(size_t)/sizeof(unsigned))
 #define SL_VALUESIZE 0
 #define SL_RAND urand
 #define SL_CMP cmp
@@ -64,15 +64,17 @@ void __init_alloc(volatile void *ptr, size_t size)
 	unsigned sls;
 
 	assert(ptr != NULL);
-	assert(size >= 1024);
 
 	sls = (sl_size(SL_MAX)+3)&~3;
+
+	assert(size >= sls+1024);
+	
 	__first = (header_t *)((volatile unsigned *)ptr+sls);
 	__first->marker = _MARK_;
+	__first->type = _FREE_;
 	__first->size = size - sls*sizeof(unsigned) - sizeof(header_t);
 	__first->prev = NULL;
 	__first->next = NULL;
-	__first->type = _FREE_;
 	sl_init(&__sl, (unsigned *)ptr, sls, NULL);
 	sl_insert(&__sl, (unsigned *)&__first, NULL, NULL);
 }
@@ -154,9 +156,7 @@ static void *__malloc_nolock(size_t size)
 	assert(gap->marker == _MARK_);
 	assert(gap->type == _FREE_);
 	gap->type = _USED_;
-	if (gap->size < size+sizeof(header_t)+16) {
-		size = gap->size;
-	} else {
+	if (gap->size >= size+sizeof(header_t)+16) {
 		header_t *ins = (header_t *)(((char *)(gap+1))+size);
 		ins->next = gap->next;
 		if (ins->next) ins->next->prev = ins;
@@ -183,9 +183,9 @@ void *BLC_PREFIX(malloc)(size_t size)
 static void *__realloc_nolock(void *ptr, size_t size)
 {
 	unsigned k;
+	size_t gapsize, oldsize;
+	header_t *gap, *head;
 	void *newptr;
-	header_t *head;
-	header_t savehead, saveprev, savenext;
 	if (ptr == NULL) {
 		return __malloc_nolock(size);
 	}
@@ -197,36 +197,48 @@ static void *__realloc_nolock(void *ptr, size_t size)
 	head = ((header_t *)ptr)-1;
 	assert(head->marker == _MARK_);
 	assert(head->type == _USED_);
-
-	if (size <= head->size && size+sizeof(header_t)+16 >= head->size) {
+	oldsize = head->size;
+	if (size <= oldsize && size+sizeof(header_t)+16 >= oldsize) {
 		return ptr;
 	}
-
-	savehead = *head;
-	if (head->prev) saveprev = *(head->prev);
-	if (head->next) savenext = *(head->next);
-
-	__free_nolock(ptr);
-	newptr = __malloc_nolock(size);
-	if (!newptr) {
-		k = sl_search(&__sl, (unsigned *)&head);
-		if (k != UNOTFOUND) sl_delete(&__sl, k, NULL);		
-		k = sl_search(&__sl, (unsigned *)&(savehead.prev));
-		if (k != UNOTFOUND) sl_delete(&__sl, k, NULL);		
-		k = sl_search(&__sl, (unsigned *)&(savehead.next));
-		if (k != UNOTFOUND) sl_delete(&__sl, k, NULL);		
-
-		*head = savehead;
-		if (head->prev) {
-			*(head->prev) = saveprev;
-			if (head->prev->type == _FREE_) sl_insert(&__sl, (unsigned *)&(head->prev), NULL, NULL);
+	gapsize = oldsize;
+	gap = head;
+	if (head->next && head->next->type == _FREE_) {
+		gapsize += head->next->size + sizeof(header_t);
+	}
+	if (head->prev && head->prev->type == _FREE_) {
+		gapsize += head->prev->size + sizeof(header_t);
+		gap = head->prev;
+	}
+	if (gapsize >= size) {
+		newptr = (void *)(gap+1);
+		__free_nolock(ptr);
+		if (gap != head) {
+			memmove(newptr, ptr, oldsize < size ? oldsize : size);
 		}
-		if (head->next) {
-			*(head->next) = savenext;
-			if (head->next->type == _FREE_) sl_insert(&__sl, (unsigned *)&(head->next), NULL, NULL);
+		k = sl_search(&__sl, (unsigned *)&gap);
+		assert(k != UNOTFOUND);
+		sl_delete(&__sl, k, NULL);
+		gap->type = _USED_;
+		if (gap->size >= size+sizeof(header_t)+16) {
+			header_t *ins = (header_t *)(((char *)(gap+1))+size);
+			ins->next = gap->next;
+			if (ins->next) ins->next->prev = ins;
+			ins->prev = gap;
+			gap->next = ins;
+			ins->size = gap->size-size-sizeof(header_t);
+			gap->size = size;
+			ins->marker = _MARK_;
+			ins->type = _FREE_;
+			sl_insert(&__sl, (unsigned *)&ins, NULL, NULL);	
 		}
 	} else {
-		memmove(newptr, ptr, savehead.size < size ? savehead.size : size);
+		newptr = __malloc_nolock(size);
+		if (newptr == NULL) {
+			return NULL;
+		}
+		memcpy(newptr, ptr, oldsize < size ? oldsize : size);
+		__free_nolock(ptr);	
 	}
 	return newptr;
 }
