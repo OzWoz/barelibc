@@ -203,8 +203,8 @@ static void *__realloc_nolock(void *ptr, size_t size)
 	}
 
 	savehead = *head;
-	saveprev = *(head->prev);
-	savenext = *(head->next);
+	if (head->prev) saveprev = *(head->prev);
+	if (head->next) savenext = *(head->next);
 
 	__free_nolock(ptr);
 	newptr = __malloc_nolock(size);
@@ -217,15 +217,17 @@ static void *__realloc_nolock(void *ptr, size_t size)
 		if (k != UNOTFOUND) sl_delete(&__sl, k, NULL);		
 
 		*head = savehead;
-		*(head->prev) = saveprev;
-		*(head->next) = savenext;
-
-		if (head->prev->type == _FREE_) sl_insert(&__sl, (unsigned *)&(head->prev), NULL, NULL);
-		if (head->next->type == _FREE_) sl_insert(&__sl, (unsigned *)&(head->next), NULL, NULL);
-
-		return NULL;
+		if (head->prev) {
+			*(head->prev) = saveprev;
+			if (head->prev->type == _FREE_) sl_insert(&__sl, (unsigned *)&(head->prev), NULL, NULL);
+		}
+		if (head->next) {
+			*(head->next) = savenext;
+			if (head->next->type == _FREE_) sl_insert(&__sl, (unsigned *)&(head->next), NULL, NULL);
+		}
+	} else {
+		memmove(newptr, ptr, savehead.size < size ? savehead.size : size);
 	}
-	memmove(newptr, ptr, savehead.size < size ? savehead.size : size);
 	return newptr;
 }
 

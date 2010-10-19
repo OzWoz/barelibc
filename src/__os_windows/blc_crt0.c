@@ -1,7 +1,9 @@
 #include <__init.h>
 #include <__os.h>
 
-#define __OS_MEMSIZE (256*1024*1024)
+#ifndef __OS_MEMSIZE
+	#define __OS_MEMSIZE (1024*1024*1024)
+#endif
 
 #undef main
 #undef malloc
