@@ -2,7 +2,7 @@
 
 include ../Makefile.config
 
-DIRLIST = hellostd string assert alloc sleep stdarg smp pf int3 atomic $(wildcard cchartab)
+DIRLIST = hellostd string assert alloc sleep stdarg smp pf int3 atomic prime hashtable $(wildcard cchartab)
 
 
 .PHONY: all $(DIRLIST)

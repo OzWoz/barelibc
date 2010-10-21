@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "__stdio_inner.h"
 
-static __inline int __putc(int mode, void *buf, int maxlen, int len, char c)
+static inline int __putc(int mode, void *buf, int maxlen, int len, char c)
 {
 	len++;
 	if (!(mode & PFORMAT_NOLIMIT) && len > maxlen) {
@@ -19,7 +19,7 @@ static __inline int __putc(int mode, void *buf, int maxlen, int len, char c)
 	return len;
 }
 
-static __inline int __close(int mode, void *buf, int maxlen, int len)
+static inline int __close(int mode, void *buf, int maxlen, int len)
 {
 	if (!(mode & PFORMAT_TO_FILE) && ((mode & PFORMAT_NOLIMIT) || len < maxlen)) {
 		((char *)buf)[len] = 0;

@@ -25,7 +25,7 @@ struct header_s {
 	header_t *next;
 };
 
-static __inline int cmp(const void *dummy, const unsigned *a, const unsigned *b)
+static inline int cmp(const void *dummy, const unsigned *a, const unsigned *b)
 {
 	header_t *pa = *(header_t **)a;
 	header_t *pb = *(header_t **)b;
@@ -36,14 +36,14 @@ static __inline int cmp(const void *dummy, const unsigned *a, const unsigned *b)
 	return 0;
 }
 
-static __inline void *fakerealloc(const void *dummy, const void *ptr, unsigned size)
+static inline void *fakerealloc(const void *dummy, const void *ptr, unsigned size)
 {
 	return NULL;
 }
 
 #define SL_PREFIX(x) sl_##x
-#define SL_ATTR static __inline
-#define SL_STATICATTR static __inline
+#define SL_ATTR static inline
+#define SL_STATICATTR static inline
 #define SL_HASBLINK 0
 #define SL_KEYSIZE (sizeof(size_t)/sizeof(unsigned))
 #define SL_VALUESIZE 0
