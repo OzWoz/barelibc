@@ -17,7 +17,7 @@ $(BINCOPY:%=$(BINDIR)/%): $$(subst $(BINDIR)/,,$$@)
 $(INCCOPY:%=$(INCDIR)/%): $$(subst $(INCDIR)/,,$$@)
 	cp $< $@
 
-$(CFILES:%=%.o): $$(patsubst %.o,%.c,$$@) $(HFILES:%=%.h) $(if $(HEADERNAME),$(INCDIR)/$(HEADERNAME).h)
+$(CFILES:%=%.o): $$(patsubst %.o,%.c,$$@) $(DEPFILES) $$(DEPFILES_$$(patsubst %.o,%,$$@)) $(if $(HEADERNAME),$(INCDIR)/$(HEADERNAME).h)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 .PHONY: $(CFILES:%=%_lib)

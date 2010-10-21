@@ -128,22 +128,16 @@ else { (klevel) = 23; (kofs) = (k)>>24; }
 
 /* Table[Round[2^32*(1 - 1/E)/E^n], {n, 0, 22}], first item +1 */
 static const unsigned SL_DIST[SL_MAXLEVEL] =
-{1};
-/*
 {2714937128, 998769553, 367426785, 135168760, 49725808, 18293102,
 	6729656, 2475702, 910760, 335050, 123258, 45344, 16681, 6137, 2258,
 831, 306, 112, 41, 15, 6, 2, 1};
-*/
 
 static const unsigned SL_DISTSUM[SL_MAXLEVEL] =
-{0};
-/*
 {2714937128, 3713706681, 4081133466, 4216302226, 4266028034,
 4284321136, 4291050792, 4293526494, 4294437254, 4294772304,
 4294895562, 4294940906, 4294957587, 4294963724, 4294965982,
 4294966813, 4294967119, 4294967231, 4294967272, 4294967287,
 4294967293, 4294967295, 0};
-*/
 
 SL_ATTR unsigned SL_PREFIX(head)(void)
 {
@@ -453,11 +447,14 @@ SL_ATTR unsigned SL_PREFIX(num)(SL_PREFIX(t) *pl)
 #ifdef SL_PRINT
 SL_ATTR void SL_PREFIX(print)(SL_PREFIX(t) *pl)
 {
-	unsigned i, j, k, klevel, kofs;
-	unsigned *v, vsmall[100];
+	unsigned i, j, k, klevel, kofs, alloc = 0;
+	unsigned *v, vsmall[110];
 
 	if (pl->num <= 100) v = vsmall;
-	else v = malloc(pl->num*sizeof(unsigned));
+	else {
+		alloc = 1;
+		v = malloc((pl->num+10)*sizeof(unsigned));
+	}
 
 	klevel = SL_MAXLEVEL-1;
 	kofs = 0;
@@ -476,7 +473,7 @@ SL_ATTR void SL_PREFIX(print)(SL_PREFIX(t) *pl)
 		for (; v[j] != SL_HEADMIX; j++) printf("----");
 		printf("---x\n");
 	}
-	if (pl->num > 100) free(v);
+	if (alloc) free(v);
 }
 #endif
 

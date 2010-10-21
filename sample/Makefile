@@ -17,5 +17,10 @@ clean: $(DIRLIST:%=%_clean)
 $(DIRLIST:%=%_clean):
 	make -C $(subst _clean,,$@) clean
 	
+.PHONY: distclean $(DIRLIST:%=%_distclean)
+distclean: $(DIRLIST:%=%_distclean)
+
+$(DIRLIST:%=%_distclean):
+	make -C $(subst _distclean,,$@) distclean
 
 ###

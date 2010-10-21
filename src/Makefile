@@ -27,5 +27,11 @@ clean: $(DIRLIST:%=%_clean)
 $(DIRLIST:%=%_clean):
 	make -C $(subst _clean,,$@) clean
 	
+.PHONY: distclean $(OSLIST:%=%_clean)
+distclean: clean $(OSLIST:%=%_clean)
+
+$(OSLIST:%=%_clean):
+	make -C __os_$(subst _clean,,$@) clean
+	
 
 ###

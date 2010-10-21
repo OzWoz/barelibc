@@ -6,6 +6,6 @@
 	#include "memory_simple.c"
 #else
 	#include "memory_adv.c"
-#endif //MEMORY_SIMPLE
+#endif
 
 ///

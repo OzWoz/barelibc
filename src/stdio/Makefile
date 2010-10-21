@@ -2,7 +2,7 @@
 
 HEADERNAME = stdio
 CFILES = fprintf fputc fputs snprintf sprintf vfprintf vsnprintf vsprintf __pformat __stdfd
-HFILES = __stdio_inner
+DEPFILES = __stdio_inner.h
 
 include ../Makefile.tpl
 

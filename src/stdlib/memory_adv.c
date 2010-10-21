@@ -7,6 +7,12 @@
 #include <stdio.h>
 #include <smp.h>
 
+//#define MEMORY_DEBUG
+
+#ifdef MEMORY_DEBUG
+	#define FORMATPTR(p) ((p) ? PTRDIFF((p), __first) : 0)
+#endif
+
 #define SL_MAX 100000
 
 typedef volatile struct header_s header_t;
@@ -136,6 +142,9 @@ void BLC_PREFIX(free)(void *ptr)
 	mutex_lock(&__mem_mutex);
 	__free_nolock(ptr);
 	mutex_unlock(&__mem_mutex);
+#ifdef MEMORY_DEBUG
+	printf("free: %p\n", FORMATPTR(ptr));
+#endif
 }
 
 static void *__malloc_nolock(size_t size)
@@ -177,6 +186,9 @@ void *BLC_PREFIX(malloc)(size_t size)
 	mutex_lock(&__mem_mutex);
 	ret = __malloc_nolock(size);
 	mutex_unlock(&__mem_mutex);
+#ifdef MEMORY_DEBUG
+	printf("malloc: %p => %p\n", size, FORMATPTR(ret));
+#endif
 	return ret;
 }
 
@@ -249,6 +261,10 @@ void *BLC_PREFIX(realloc)(void *ptr, size_t size)
 	mutex_lock(&__mem_mutex);
 	ret = __realloc_nolock(ptr, size);
 	mutex_unlock(&__mem_mutex);
+#ifdef MEMORY_DEBUG
+	printf("realloc: %p %p => %p\n", FORMATPTR(ptr), size, FORMATPTR(ret));
+	sl_print(&__sl);
+#endif
 	return ret;
 }
 

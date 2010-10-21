@@ -24,4 +24,9 @@ $(CFILES:%=%_clean):
 $(CPPFILES:%=%_clean):
 	rm -f $(subst _clean,.o,$@)
 
+.PHONY: distclean
+distclean: clean $(OSLIST:%=%_distclean)
+$(OSLIST:%=%_distclean):
+	rm -f $(BINDIR)/$(EXECNAME)$(APPEXT_$(subst _distclean,,$@))
+
 ###

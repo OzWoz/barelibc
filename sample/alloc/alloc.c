@@ -34,25 +34,28 @@ void test1(void)
 #define M 1024
 #define T 10000
 #define S 10000
+
 void test2(void)
 {
-	unsigned i, j, k, s[M];
+	unsigned i, j, k;
+	unsigned s[M];
 	unsigned char *v[M];
 	for (i = 0; i < M; i++) {
 		v[i] = NULL;
 		s[i] = 0;
 	}
 	for (i = 0; i < T; i++) {
+		srand(i+3);
 		j = rand()%M;
 		if (v[j]) {
 			for (k = 0; k < s[j]; k++) {
-				assert(v[j][k] == (j&0xff));
+				assert(v[j][k] == ((j^s[j])&0xff));
 			}
 		}
 		s[j] = rand()%S;
 		v[j] = realloc(v[j], s[j]);
 		assert(s[j] == 0 || v[j] != NULL);
-		memset(v[j], j&0xff, s[j]);
+		memset(v[j], (j^s[j])&0xff, s[j]);
 	}
 }
 
