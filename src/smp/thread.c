@@ -19,7 +19,7 @@ void thread_create(thread_fnc func, void *param)
 		__os_smp_enqueue(func, param, &bad);
 		if (!bad) break;
 		__os_smp_dequeue(&proc, &procparam);
-		if (proc != 0) {
+		if (proc != NULL) {
 			do {
 				__os_smp_enqueue(func, param, &bad);
 			} while (bad);
@@ -34,7 +34,7 @@ void thread_wait(void)
 	void *procparam;
 	for (;;) {
 		__os_smp_dequeue(&proc, &procparam);
-		if (proc == 0) break;
+		if (proc == NULL) break;
         __os_smp_run(proc, procparam);
 	}
 	__os_smp_wait();

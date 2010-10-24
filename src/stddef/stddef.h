@@ -12,6 +12,8 @@ typedef unsigned long long size_t;
 	typedef char wchar_t;
 #endif
 
+#define __BARELIBC__
+
 #define NULL ((void *)0)
 
 #define PTRDIFF(a, b) ((ptrdiff_t)(a)-(ptrdiff_t)(b))

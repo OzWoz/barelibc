@@ -17,7 +17,6 @@
 
 #define __os_print_char(c) intel_asm(__b_print_char "call b_print_char", ::"a"(c) :"cc")
 #define __os_print_newline() intel_asm(__b_print_newline "call b_print_newline", :::"cc")
-#define __os_print_hex(l) intel_asm(__b_debug_dump_rax "call b_debug_dump_rax", ::"a"(l) :"cc")
 
 #define __os_get_timecounter(ret) intel_asm(__b_get_timecounter "call b_get_timecounter", :"=a"(*(ret)) ::"cc")
 

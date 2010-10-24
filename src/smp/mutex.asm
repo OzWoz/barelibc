@@ -30,7 +30,7 @@ fail:
 
 ;void mutex_unlock(mutex_t *m);
 mutex_unlock:
-	btr qword [PARAM1], 0
+	lock btr qword [PARAM1], 0
 	ret
 
 ;;;
